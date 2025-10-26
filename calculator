@@ -5,15 +5,23 @@ public class calculator {
         System.out.println("Write two numbers to do a numerical operation.");
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Write a number: ");
+        System.out.print("First number: ");
         int number1 = Integer.parseInt(sc.nextLine());
-        System.out.print("Write another number: ");
+        System.out.print("Second number: ");
         int number2 = Integer.parseInt(sc.nextLine());
 
-        System.out.print("Enter 1 to add. 2 to subtract. 3 to multiplier. And 4 to division: ");
-        int oper = Integer.parseInt(sc.nextLine());
+        int oper = 0;
 
-        int result = 0;
+        while (oper < 1 || oper > 4) {
+            System.out.print("Enter 1 to add. 2 to subtract. 3 to multiplier. And 4 to division: ");
+            oper = Integer.parseInt(sc.nextLine());
+
+            if (oper < 1 || oper >4) {
+                System.out.println("Invalid option. Please choose a number between 1 and 4.");
+            }
+        }
+
+        double result = 0;
 
         switch (oper) {
             case 1:
@@ -37,6 +45,16 @@ public class calculator {
                 System.out.println("Invalid operation.");
                 sc.close();
                 return;
+        }
+
+        if (oper == 1) {
+            System.out.println("You chose to add.");
+        } else if (oper == 2) {
+            System.out.println("You chose to subtract.");
+        } else if (oper == 3) {
+            System.out.println("You chose to multiply.");
+        } else if (oper == 4) {
+            System.out.println("You chose to divide.");
         }
 
         System.out.println("The result is: " + result);
