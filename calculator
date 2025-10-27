@@ -1,63 +1,82 @@
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
-public class calculator {
+class Main {
     public static void main(String[] args) {
         System.out.println("Write two numbers to do a numerical operation.");
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("First number: ");
-        int number1 = Integer.parseInt(sc.nextLine());
-        System.out.print("Second number: ");
-        int number2 = Integer.parseInt(sc.nextLine());
+        int number1 = selectNumber(sc, "First number: ");
+        int number2 = selectNumber(sc, "Second number: ");
+        int oper = selectOper(sc);
 
+        double result = separeteOperations(oper, number1, number2, sc);
+
+        DecimalFormat df = new DecimalFormat("0.##");
+        System.out.println("The result is: " + df.format(result));
+        sc.close();
+    }
+
+    private static int selectNumber(Scanner sc, String message) {
+        System.out.print(message);
+        return Integer.parseInt(sc.nextLine());
+    }
+
+    private static int selectOper(Scanner sc) {
         int oper = 0;
 
         while (oper < 1 || oper > 4) {
-            System.out.print("Enter 1 to add. 2 to subtract. 3 to multiplier. And 4 to division: ");
+            System.out.print("Enter 1 to sum. 2 to subtract. 3 to multiply. And 4 to divide: ");
             oper = Integer.parseInt(sc.nextLine());
 
-            if (oper < 1 || oper >4) {
+            if (oper < 1 || oper > 4) {
                 System.out.println("Invalid option. Please choose a number between 1 and 4.");
             }
         }
 
-        double result = 0;
+        return oper;
+    }
 
+    private static double separeteOperations(int oper, int number1, int number2, Scanner sc) {
         switch (oper) {
             case 1:
-                result = number1 + number2;
-                break;
+                System.out.println("You chose to sum.");
+                return sum(number1, number2);
             case 2:
-                result = number1 - number2;
-                break;
+                System.out.println("You chose to subtract.");
+                return subtract(number1, number2);
             case 3:
-                result = number1 * number2;
-                break;
+                System.out.println("You chose to multiply.");
+                return multiply(number1, number2);
             case 4:
-                if (number2 == 0) {
-                    System.out.println("Cannot divide by zero!");
-                    sc.close();
-                    return;
-                }
-                result = number1 / number2;
-                break;
+                System.out.println("You chose to divide.");
+                return divide(number1, number2, sc);
             default:
                 System.out.println("Invalid operation.");
                 sc.close();
-                return;
+                return 0.0; // Adicionar Exception
         }
+    }
 
-        if (oper == 1) {
-            System.out.println("You chose to add.");
-        } else if (oper == 2) {
-            System.out.println("You chose to subtract.");
-        } else if (oper == 3) {
-            System.out.println("You chose to multiply.");
-        } else if (oper == 4) {
-            System.out.println("You chose to divide.");
+    private static double sum(int number1, int number2) {
+        return number1 + number2;
+    }
+
+    private static double subtract(int number1, int number2) {
+        // Caso o numero 1 for menor que o numero 2, deve dar erro
+        return number1 - number2;
+    }
+
+    private static double multiply(int number1, int number2) {
+        return number1 * number2;
+    }
+
+    private static double divide(int number1, int number2, Scanner sc) {
+        if (number2 == 0) {
+            System.out.println("Cannot divide by zero!");
+            sc.close();
+            return 0.0; // Adicionar Exception
         }
-
-        System.out.println("The result is: " + result);
-        sc.close();
+        return (double) number1 / number2;
     }
 }
